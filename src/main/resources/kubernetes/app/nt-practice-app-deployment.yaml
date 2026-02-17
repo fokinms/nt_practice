@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nt-plug-deployment
+  namespace: nt-practice-app
+  labels:
+    app: nt-plug
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nt-plug
+  template:
+    metadata:
+      labels:
+        app: nt-plug
+    spec:
+      containers:
+        - name: nt-plug-container
+          image: nt_first_practice:v1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-svc.nt-practice-kafka.svc.cluster.local:9092"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-svc.nt-practice-kafka.svc.cluster.local:9092"
+          ports:
+            - containerPort: 8080
+              name: http
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-kafka-configmap
+  namespace: ingress-nginx
+data:
+  9092: "nt-practice-kafka/kafka-svc:9092"
